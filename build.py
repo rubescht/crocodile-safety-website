@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Builds the Crocodile Safety Australia static site into ./dist."""
 import json, os, shutil, html
+import diagrams
 
 SRC = os.path.join(os.path.dirname(__file__), 'src')
 DIST = os.path.join(os.path.dirname(__file__), 'dist')
@@ -40,7 +41,7 @@ TEETH = ('<svg class="teeth" viewBox="0 0 1440 24" preserveAspectRatio="none" ar
 
 # ---------------------------------------------------------------- services
 SERVICES = [
- dict(slug='crocodile-capture-relocation', name='Crocodile Capture & Relocation', icon='trap',
+ dict(slug='crocodile-capture-relocation', where='On the water — the last resort when a crocodile can’t be managed in place', name='Crocodile Capture & Relocation', icon='trap',
   short='When other controls are impractical, we trap and relocate problem crocodiles — assessed case by case and fully permitted.',
   intro='Sometimes a crocodile and a work site simply can’t share the same stretch of water. When spotting, exclusion and work-practice controls aren’t practical, our team removes the risk by capturing and relocating the animal — safely for your people and humanely for the crocodile.',
   includes=['Site inspection and assessment of the animal, its behaviour and the risk it poses',
@@ -56,7 +57,7 @@ SERVICES = [
   faqs=[('Is capture always the answer?', 'No. Capture is a last resort. We start with a risk assessment and recommend the least invasive control that keeps people safe — often overwatch, exclusion zones or changed work practices.'),
         ('Do you need a permit to remove a crocodile?', 'Crocodiles are protected wildlife, so removal is controlled under state and territory law. We work within the approvals framework and help you arrange what’s required before any capture.'),
         ('How long does a capture take?', 'It depends on the animal, the site and the method. Some captures happen in a single session; trapping can take days of monitoring. We’ll give you an honest plan after the site assessment.')]),
- dict(slug='crocodile-spotting-overwatch', name='Crocodile Spotting & Safety Overwatch', icon='eye',
+ dict(slug='crocodile-spotting-overwatch', where='On the bank — eyes on the water while crews work', name='Crocodile Spotting & Safety Overwatch', icon='eye',
   short='Trained operators watch the water and banks so crews can work near croc habitat with eyes on every threat.',
   intro='Crocodiles are ambush predators — the danger is the one nobody sees. Our safety overwatch operators keep dedicated, uninterrupted eyes on the water and banks while your crew focuses on the job, with clear stop-work authority and communication protocols agreed before work starts.',
   includes=['Dedicated spotters positioned for clear sight lines over water and banks',
@@ -72,7 +73,7 @@ SERVICES = [
   faqs=[('Why not just have a crew member keep watch?', 'A spotter who is also doing their own job is not watching the water. Dedicated, trained overwatch removes that distraction and brings experience in reading crocodile behaviour and habitat.'),
         ('Do you work at night?', 'Yes. Crocodiles are often most active after dark, and spotlight surveys for eyeshine are a standard part of night-time overwatch.'),
         ('Can you work on remote sites?', 'Yes. We service projects across the Northern Territory, Western Australia and Queensland, including remote and fly-in sites.')]),
- dict(slug='fauna-spotter-catcher', name='Fauna Spotter Catcher Services', icon='snake',
+ dict(slug='fauna-spotter-catcher', where='Beside the machinery — snakes and fauna during clearing', name='Fauna Spotter Catcher Services', icon='snake',
   short='Onsite snake and fauna capture and relocation for construction, infrastructure, mining and environmental works.',
   intro='Clearing, earthworks and construction disturb wildlife — and bring snakes and other fauna into contact with your crew. Our licensed spotter catchers work ahead of and alongside machinery to find, capture and relocate animals so works stay safe, compliant and moving.',
   includes=['Pre-clearing fauna surveys and inspection of hollows, logs and burrows',
@@ -87,7 +88,7 @@ SERVICES = [
   faqs=[('Are your spotter catchers licensed?', 'Yes. Our operators are licensed and insured. [ADD LICENCE / PERMIT DETAILS]'),
         ('Do you handle venomous snakes?', 'Yes. Venomous snake capture and relocation is a core part of the service, carried out by experienced handlers with the right equipment.'),
         ('Can you provide records for our approvals?', 'Yes. We keep fauna encounter and relocation records and can supply reports for your environmental management plan.')]),
- dict(slug='feral-animal-management', name='Feral Animal Management', icon='shield',
+ dict(slug='feral-animal-management', where='In the surrounding land — licensed control programs', name='Feral Animal Management', icon='shield',
   short='Licensed, insured feral animal control programs across the Northern Territory.',
   intro='Feral animals damage infrastructure, degrade habitat and create safety risks on properties and project sites. We deliver licensed, insured feral animal management programs tailored to your land, your objectives and your obligations.',
   includes=['Assessment of feral animal activity, impacts and risks on your site',
@@ -102,7 +103,7 @@ SERVICES = [
   faqs=[('Which animals do you manage?', '[CONFIRM THE SPECIES YOU MANAGE — e.g. pigs, buffalo, cattle, cats, dogs]'),
         ('Where do you operate?', 'Feral animal management is delivered across the Northern Territory.'),
         ('Are programs humane?', 'Yes. Programs are carried out by licensed operators in line with the relevant codes of practice for humane control.')]),
- dict(slug='awareness-training', name='Crocodile & Snake Awareness Training', icon='cap',
+ dict(slug='awareness-training', where='With the crew — toolbox talks and site briefings', name='Crocodile & Snake Awareness Training', icon='cap',
   short='Onsite training, toolbox talks and site briefings that keep crews croc-wise and snake-safe.',
   intro='Most wildlife incidents are avoidable. Our awareness training gives workers the knowledge to recognise crocodile and snake risk, change how they work around water and bush, and respond correctly if something goes wrong — delivered onsite, in plain language, by people who work with these animals every day.',
   includes=['Crocodile biology, behaviour and habitat — where and when the risk is highest',
@@ -118,7 +119,7 @@ SERVICES = [
   faqs=[('How long is a session?', '[CONFIRM — e.g. 30-minute toolbox talk to half-day course]. We tailor sessions to your roster and site.'),
         ('Do you come to our site?', 'Yes. Training is delivered onsite so it can reflect the real conditions your crew works in.'),
         ('Is training enough on its own?', 'Training is a key control, but on high-risk water sites it works best alongside overwatch and good work-practice controls.')]),
- dict(slug='wildlife-consulting', name='Wildlife Consulting', icon='doc',
+ dict(slug='wildlife-consulting', where='In the site office — SOPs, SWMS and risk assessments', name='Wildlife Consulting', icon='doc',
   short='SOP and SWMS development, captive husbandry advice and specialist training for parks, zoos and government agencies.',
   intro='Good wildlife-risk management starts on paper. We help organisations build the procedures, documents and skills they need to manage crocodiles, snakes and other wildlife safely — drawing on more than 20 years of hands-on field experience.',
   includes=['Standard operating procedures (SOPs) for wildlife handling and response',
@@ -311,6 +312,8 @@ def build_home():
 <div class="wrap">
 <div class="section-head"><div><p class="eyebrow">What we do</p><h2>Six lines of defence</h2></div>
 <p>Every job starts with a site risk assessment. We choose the least invasive control that keeps your people safe — capture is the last resort, not the default.</p></div>
+{diagrams.section_block(SERVICES, '')}
+<div style="height:40px"></div>
 {service_cards('')}
 </div></section>
 {SECTORS}
@@ -402,7 +405,7 @@ def build_about():
 
 def build_services():
     body = page_hero('Services', 'Six lines of defence', 'From eyes on the water to capture and relocation — wildlife-risk controls matched to your site, your crew and your approvals.') + f'''
-<section class="section scales"><div class="wrap">{service_cards('')}</div></section>
+<section class="section scales"><div class="wrap"><div class="section-head"><div><p class="eyebrow">On site</p><h2>Where each line works</h2></div><p>Six services, each covering a different part of the risk — from the water’s edge to the site office.</p></div>{diagrams.section_block(SERVICES, '')}<div style="height:56px"></div>{service_cards('')}</div></section>
 <section class="section" style="background:var(--ink-2)"><div class="wrap">
 <p class="eyebrow">Our approach</p><h2 style="margin-bottom:50px">Assess. Plan. Control. Brief.</h2>{steps_html()}</div></section>
 {SECTORS}
@@ -425,7 +428,7 @@ def build_service(s):
 <h2 style="margin-top:52px">When you need it</h2>
 <div class="grid g2">{''.join(f'<div class="card" style="padding:22px">{icon(s["icon"], 30)}<p style="color:var(--soft)">{html.escape(x)}</p></div>' for x in s['when'])}</div>
 <h2 style="margin-top:52px">How it works</h2>
-{steps_html()}
+{diagrams.service_diagram(s['slug'])}
 <h2 style="margin-top:52px">Questions</h2>
 <div class="faq">{faqs}</div>
 </div>
