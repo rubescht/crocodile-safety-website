@@ -91,10 +91,13 @@ function showVideo(v) {
     if (lines.length) {
       // on phones the transcript replaces the small in-video captions
       if (window.matchMedia('(max-width: 640px)').matches && v.textTracks && v.textTracks[0]) v.textTracks[0].mode = 'hidden';
-      v.addEventListener('timeupdate', function () {
-        var t = v.currentTime;
-        lines.forEach(function (b) { b.classList.toggle('is-on', t >= +b.dataset.start - 0.3 && t < +b.dataset.end + 1.5); });
-      });
+      // always keep one line lit: the latest line that has started (the first line before the film starts)
+      var mark = function () {
+        var t = v.currentTime, cur = 0;
+        lines.forEach(function (b, i) { if (t >= +b.dataset.start - 0.3) cur = i; });
+        lines.forEach(function (b, i) { b.classList.toggle('is-on', i === cur); b.parentNode.classList.toggle('is-on', i === cur); });
+      };
+      v.addEventListener('timeupdate', mark); v.addEventListener('seeked', mark); mark();
       lines.forEach(function (b) { b.addEventListener('click', function () {
         v.currentTime = +b.dataset.start; var p = v.play(); if (p && p.catch) p.catch(function () {});
       }); });

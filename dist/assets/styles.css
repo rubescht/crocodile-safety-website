@@ -538,3 +538,18 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
   .ch-detail strong{font-size:22px}
   .ch-intro:not(.is-on){display:none}
 }
+/* About page: narration box under the film. Phones only, one line at a time; hidden on larger screens */
+.vsync .transcript{display:none}
+@media (max-width:640px){
+  .vsync .transcript{display:block;padding:14px 16px 16px}
+  .vsync .transcript li{display:none}
+  .vsync .transcript li.is-on{display:block;animation:chin .35s ease}
+  .vsync .transcript button.is-on{background:none;padding:0;font-size:16px;line-height:1.5;color:var(--white);cursor:default}
+  .vsync .transcript .tr-t{display:none}
+}
+@media (prefers-reduced-motion:reduce){.vsync .transcript li.is-on{animation:none}}
+@media (max-width:640px){
+  .vsync .explainer{display:flex;flex-direction:column}
+  .vsync .explainer .transcript{order:1;border-top:0}
+  .vsync .explainer figcaption{order:2;border-top:1px solid var(--line)}
+}

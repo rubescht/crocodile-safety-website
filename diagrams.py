@@ -243,7 +243,7 @@ def video_sync_block(services, root):
         f'<p>{CH_TEXT[i]}</p><a href="{root}services/{s["slug"]}.html">Explore {html.escape(s["name"].split(" ")[0].lower()) if False else "this service"} \u2192</a></div></div>'
         for i, s in enumerate(services))
     return f'''<div class="vsync" data-sync>
-{explainer(root, transcript=False)}
+{explainer(root)}
 <ol class="ch-rail" aria-label="Chapters: jump to a line of defence">{rail}</ol>
 <div class="vsync-grid">
 <figure class="info-card xsec-fig vsync-map"><div class="xsec-scroll">{site_section_svg()}
