@@ -335,7 +335,7 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
 @media (prefers-reduced-motion:reduce){.xsec .mk{animation:none}}
 
 /* Phone-specific diagram layouts */
-.xsec-m,.plan-m,.scale-m{display:none}
+.xsec-m,.plan-m,.scale-m{display:none!important}
 .xsec-m-h{margin:14px 0 8px;color:var(--gold);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
 .xsec-m-h:first-child{margin-top:0}
 .xsec-m svg{width:100%;height:auto;display:block;border-radius:12px}
@@ -343,9 +343,9 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
 .plan-key b{color:var(--gold);margin-right:6px}
 @media (max-width:640px){
   .xsec-d{display:none!important}
-  .xsec-m{display:block}
-  .plan-d,.scale-d{display:none}
-  .plan-m,.scale-m{display:block;width:100%;height:auto}
+  .xsec-m{display:block!important}
+  .plan-d,.scale-d{display:none!important}
+  .plan-m,.scale-m{display:block!important;width:100%;height:auto}
 }
 /* Brand logo */
 .brand-logo{height:48px;width:auto;border-radius:8px;display:block}
@@ -565,3 +565,29 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
   .vsync .transcript button.is-on{font-size:15px;line-height:1.45}
 }
 @media (max-width:640px){.vhero{overflow:visible;overflow-x:clip}}
+/* Desktop/tablet now matches phones: narration ticker under the About film, and all six lines listed */
+.vsync .transcript{display:block}
+.vsync .transcript li{display:block}
+.vsync .transcript ol{position:relative;display:block;overflow:hidden;transition:height .45s ease}
+.vsync .transcript li{position:absolute;left:0;right:0;top:0;opacity:0;transform:translateY(110%);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .45s ease}
+.vsync .transcript li.is-past{transform:translateY(-110%)}
+.vsync .transcript li.is-on{opacity:1;transform:none}
+.vsync .transcript button.is-on{background:none;padding:0;font-size:clamp(15px,1.4vw,19px);line-height:1.45;color:var(--white);cursor:default}
+.vsync .transcript .tr-t{display:none}
+.vsync .transcript ol{grid-template-columns:none}
+.hero .hero-watch{border-color:rgba(227,178,60,.6);background:rgba(227,178,60,.08)}
+@media (min-width:641px){
+  .vsync-grid{grid-template-columns:minmax(0,1fr)}
+  .ch-details{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:10px;min-height:0}
+  .ch-detail{display:flex;padding:16px;border-radius:14px;opacity:.62;transition:opacity .3s,background .3s;animation:none!important}
+  .ch-detail.is-on{opacity:1;background:rgba(227,178,60,.10);box-shadow:0 0 0 1px rgba(227,178,60,.5) inset}
+  .ch-detail strong{font-size:22px}
+  .ch-intro{display:none!important}
+}
+@media (min-width:641px) and (max-width:900px){.ch-details{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){.vsync .transcript li,.vsync .transcript ol{transition:none}}
+/* Desktop fixes */
+.hero-body{width:100%}
+.span-all{grid-column:1/-1}
+.sectors .wrap{justify-content:center}
+.quick-form select{font-size:13px;padding-right:28px;text-overflow:ellipsis}

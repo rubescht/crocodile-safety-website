@@ -89,8 +89,8 @@ function showVideo(v) {
     // transcript: highlight the line being spoken; tap a line to jump there
     var lines = fig.querySelectorAll('.transcript button');
     if (lines.length) {
-      // on phones the transcript replaces the small in-video captions
-      if (window.matchMedia('(max-width: 640px)').matches && v.textTracks && v.textTracks[0]) v.textTracks[0].mode = 'hidden';
+      // the on-page narration replaces the small in-video captions (same on every screen size)
+      if (v.textTracks && v.textTracks[0]) v.textTracks[0].mode = 'hidden';
       // always keep one line lit: the latest line that has started (the first line before the film starts)
       var mark = function () {
         var t = v.currentTime, cur = 0;

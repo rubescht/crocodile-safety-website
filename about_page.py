@@ -104,7 +104,7 @@ def build_about_page(g):
     services = g['SERVICES']
     body = f'''<section class="page-hero scales vhero"><div class="wrap" style="position:relative">
 <p class="eyebrow">About us</p><h1 style="max-width:900px">Six lines of defence</h1>
-<p class="lead">Since 2002 we’ve kept crews safe in crocodile country. Watch how we do it<span class="m-hide"> — the graphics below follow along as each line is explained</span>.</p>
+<p class="lead">Since 2002 we’ve kept crews safe in crocodile country. Watch how we do it.</p>
 <div class="vhero-gap"></div>
 {diagrams.video_sync_block(services, '')}
 </div></section>

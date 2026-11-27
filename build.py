@@ -225,14 +225,14 @@ def service_options(selected=''):
 
 def enquiry_form(root, selected='', compact=False):
     extra = '' if compact else ('<label>Email<input type="email" name="Email" autocomplete="email"></label>'
-                                '<label>Site location<input type="text" name="Location" placeholder="e.g. Adelaide River, NT"></label>')
+                                '<label class="full">Site location<input type="text" name="Location" placeholder="e.g. Adelaide River, NT"></label>')
     details = '' if compact else '<label class="full">Project details<textarea name="Details" placeholder="Dates, crew size, work near water, what you’ve seen…"></textarea></label>'
     return f'''<form class="form{' quick-form' if compact else ''}" data-enquiry action="https://formspree.io/f/YOUR-FORM-ID" method="POST">
 <label>Name<input type="text" name="Name" autocomplete="name" required></label>
 <label>Organisation<input type="text" name="Organisation" autocomplete="organization"></label>
 <label>Phone<input type="tel" name="Phone" autocomplete="tel" required></label>
 {extra}
-<label{' class="full"' if compact else ''}>Service<select name="Service">{service_options(selected)}</select></label>
+<label class="full">Service<select name="Service">{service_options(selected)}</select></label>
 {details}
 <button class="btn btn-gold" type="submit">{'Request a call back' if compact else 'Send enquiry'}</button>
 <p class="form-status" role="status" aria-live="polite"></p>
@@ -252,7 +252,7 @@ def service_cards(root, feature_first=True):
         if i == 0 and feature_first:
             out.append(f'<a href="{href}" class="card card-feature span2 reveal">{CROC_SVG}<span class="num">0{i+1}</span><h3>{html.escape(s["name"])}</h3><p>{html.escape(s["short"])}</p><span class="more">Explore service →</span></a>')
         else:
-            span = ' span2' if (feature_first and i == 5) else ''
+            span = ' span-all' if (feature_first and i == 5) else ''
             out.append(f'<a href="{href}" class="card{span} reveal"><span class="num">0{i+1}</span>{icon(s["icon"])}<h3>{html.escape(s["name"])}</h3><p>{html.escape(s["short"])}</p><span class="more">Explore →</span></a>')
     return '<div class="grid g3">' + ''.join(out) + '</div>'
 
@@ -310,7 +310,7 @@ def build_home():
 <p class="eyebrow">Northern Australia · Since 2002</p>
 <h1>We handle what<br><span>lurks below.</span></h1>
 <p class="lead">Specialist crocodile, snake and wildlife-risk management for government and industry across the NT, WA and QLD — led by Chris Peberdy, in the field since 2002.</p>
-<div class="btn-row"><a class="btn btn-gold hero-enquire" href="contact.html">Enquire now</a><a class="btn btn-ghost hero-watch" href="#capture-files" data-watch><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="#E3B23C"/></svg><span class="m-hide">Watch the film with sound</span><span class="m-show">1-min video: keeping crews croc-safe</span></a></div>
+<div class="btn-row"><a class="btn btn-ghost hero-watch" href="#capture-files" data-watch><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="#E3B23C"/></svg>1-min video: keeping crews croc-safe</a></div>
 </div>
 </section>
 {MARQUEE}
