@@ -74,6 +74,19 @@
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     });
     v.addEventListener('ended', function () { v.muted = true; v.loop = true; fig.classList.remove('has-sound'); v.controls = false; v.play(); });
+    // transcript: highlight the line being spoken; tap a line to jump there
+    var lines = fig.querySelectorAll('.transcript button');
+    if (lines.length) {
+      // on phones the transcript replaces the small in-video captions
+      if (window.matchMedia('(max-width: 640px)').matches && v.textTracks && v.textTracks[0]) v.textTracks[0].mode = 'hidden';
+      v.addEventListener('timeupdate', function () {
+        var t = v.currentTime;
+        lines.forEach(function (b) { b.classList.toggle('is-on', t >= +b.dataset.start - 0.3 && t < +b.dataset.end + 1.5); });
+      });
+      lines.forEach(function (b) { b.addEventListener('click', function () {
+        v.currentTime = +b.dataset.start; var p = v.play(); if (p && p.catch) p.catch(function () {});
+      }); });
+    }
   });
 
 

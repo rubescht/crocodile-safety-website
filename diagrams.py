@@ -195,7 +195,20 @@ DIAGRAMS = {
 def service_diagram(slug):
     return DIAGRAMS[slug]()
 
-def explainer(root):
+CUES = [(0.5, 6.8, 'Working in crocodile country takes more than luck. We protect your crew with six lines of defence.'),
+ (8.3, 15.3, 'One: capture and relocation. Our last resort, when a crocodile can\u2019t be managed in place.'),
+ (16.3, 21.6, 'Two: safety overwatch. Trained eyes on the water while your crew works.'),
+ (24.3, 30.3, 'Three: fauna spotter catchers, moving snakes and wildlife out of harm\u2019s way.'),
+ (32.3, 37.3, 'Four: feral animal management, across the land around your site.'),
+ (40.3, 45.6, 'Five: awareness training, so every worker knows the risk.'),
+ (48.3, 55.7, 'Six: wildlife consulting, the procedures that hold it all together. Crocodile Safety Australia.'),
+ (56.8, 62.2, 'Call us on 0409 326 307.')]
+
+def transcript_html():
+    items = ''.join(f'<li><button type="button" data-start="{a}" data-end="{b}"><span class="tr-t">{int(a)//60}:{int(a)%60:02d}</span><span>{html.escape(t)}</span></button></li>' for a, b, t in CUES)
+    return f'<div class="transcript"><p class="tr-h">What the narrator says</p><ol>{items}</ol></div>'
+
+def explainer(root, transcript=True):
     """Autoplaying (muted) explainer film with captions and a tap-for-sound button."""
     return f'''<figure class="explainer reveal" data-explainer>
 <video autoplay muted loop playsinline preload="metadata" poster="{root}assets/media/six-lines-poster.jpg" aria-label="Video: the six lines of defence explained">
@@ -204,6 +217,7 @@ def explainer(root):
 </video>
 <button type="button" class="sound-btn"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Tap for sound</span></button>
 <figcaption><span><strong>The six lines of defence</strong> · 1:02 · narrated</span><span>Illustrative footage</span></figcaption>
+{transcript_html() if transcript else ''}
 </figure>'''
 
 
@@ -229,7 +243,7 @@ def video_sync_block(services, root):
         f'<p>{CH_TEXT[i]}</p><a href="{root}services/{s["slug"]}.html">Explore {html.escape(s["name"].split(" ")[0].lower()) if False else "this service"} \u2192</a></div></div>'
         for i, s in enumerate(services))
     return f'''<div class="vsync" data-sync>
-{explainer(root)}
+{explainer(root, transcript=False)}
 <ol class="ch-rail" aria-label="Chapters: jump to a line of defence">{rail}</ol>
 <div class="vsync-grid">
 <figure class="info-card xsec-fig vsync-map"><div class="xsec-scroll">{site_section_svg()}
