@@ -100,7 +100,7 @@ def scale_mobile_svg():
 def build_about_page(g):
     icon, page, page_hero, cta_band, HERO = g['icon'], g['page'], g['page_hero'], g['cta_band'], 'assets/media/hero.jpg'
     sectors = ''.join(f'<li class="reveal">{icon(ic, 34)}<span>{name}</span></li>' for name, ic in SECTORS)
-    import diagrams
+    import diagrams, story
     services = g['SERVICES']
     body = f'''<section class="page-hero scales vhero"><div class="wrap" style="position:relative">
 <p class="eyebrow">About us</p><h1 style="max-width:900px">Six lines of defence</h1>
@@ -142,6 +142,16 @@ def build_about_page(g):
 </div></section>
 
 <section class="section" style="background:var(--ink-2)"><div class="wrap">
+<div class="section-head"><div><p class="eyebrow">Our track record</p><h2>20+ years in the field</h2></div><p>The milestones that made Chris Peberdy and CSA the call for crocodile and snake risk across the north.</p></div>
+{story.timeline_html(icon)}
+<div style="height:48px"></div>
+{story.known_for_html()}
+</div></section>
+<section class="section scales"><div class="wrap">
+<div class="section-head"><div><p class="eyebrow">Our point of difference</p><h2>Why crews choose CSA</h2></div><p>Practical, experience-driven and accountable.</p></div>
+{story.pod_html(icon)}
+</div></section>
+<section class="section" style="background:var(--ink-2)"><div class="wrap">
 <div class="section-head"><div><p class="eyebrow">Who we work with</p><h2>Trusted by government &amp; industry</h2></div>
 <p>Six sectors, one approach: practical controls that fit the way your crew really works.</p></div>
 <ul class="sector-grid">{sectors}</ul>
@@ -151,9 +161,10 @@ def build_about_page(g):
 <div class="photo reveal"><img src="{HERO}" alt="Wildlife ranger in a boat on a Top End river with a catching pole" loading="lazy"><div class="photo-badge"><span class="display">2002</span><small>ESTABLISHED</small></div></div>
 <div class="reveal"><p class="eyebrow">Our story</p><h2>Practical. Experienced. On site.</h2>
 <p style="font-size:18px;margin:24px 0">Crocodile Safety Australia helps government and industry work safely where crocodiles, snakes and other wildlife live. We read the site, understand the animals and design controls that fit the way your crew actually works.</p>
-<p>[FOUNDER NAME AND SHORT BIO — background, years handling crocodiles, licences, notable projects]</p>
+<p>Founded by <strong>Chris Peberdy</strong> in Darwin in 2002, CSA delivers expert reptile and wildlife handling, risk management, training, husbandry and advisory services to government and non-government organisations across the NT, WA and QLD.</p>
+<p>Chris is the operator you deal with — from a 4.5-metre saltwater crocodile flown to Sydney (now known as Elvis) to Kakadu’s crocodile SOPs and on-set safety for the BBC and National Geographic.</p>
 <h3 style="margin:28px 0 14px;font-size:28px">Credentials</h3>
-<ul class="pills"><li>Licensed &amp; insured</li><li>[PERMIT / LICENCE NO.]</li><li>[PUBLIC LIABILITY COVER]</li></ul></div>
+<ul class="pills"><li>Licensed &amp; insured</li><li>WHS-compliant</li><li>SOPs, SWMS &amp; risk assessments</li></ul></div>
 </div></section>
 ''' + cta_band('')
     page('about.html', 'About | Crocodile Safety Australia',

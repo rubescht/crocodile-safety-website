@@ -2,6 +2,7 @@
 """Builds the Crocodile Safety Australia static site into ./dist."""
 import json, os, shutil, html
 import diagrams
+import story
 
 SRC = os.path.join(os.path.dirname(__file__), 'src')
 DIST = os.path.join(os.path.dirname(__file__), 'dist')
@@ -59,7 +60,7 @@ SERVICES = [
         ('How long does a capture take?', 'It depends on the animal, the site and the method. Some captures happen in a single session; trapping can take days of monitoring. We’ll give you an honest plan after the site assessment.')]),
  dict(slug='crocodile-spotting-overwatch', where='On the bank — eyes on the water while crews work', name='Crocodile Spotting & Safety Overwatch', icon='eye',
   short='Trained operators watch the water and banks so crews can work near croc habitat with eyes on every threat.',
-  intro='Crocodiles are ambush predators — the danger is the one nobody sees. Our safety overwatch operators keep dedicated, uninterrupted eyes on the water and banks while your crew focuses on the job, with clear stop-work authority and communication protocols agreed before work starts.',
+  intro='The Northern Territory’s crocodile population has recovered strongly — a great conservation success, but more chance of human–crocodile encounters for crews in remote areas and on waterways. Our safety overwatch operators keep dedicated, uninterrupted eyes on the water and banks while your crew focuses on the job, with clear stop-work authority and communication protocols agreed before work starts. Armed safety overwatch is available where the risk requires it.',
   includes=['Dedicated spotters positioned for clear sight lines over water and banks',
             'Pre-start briefings on crocodile behaviour, warning signs and site rules',
             'Agreed alert, stop-work and evacuation protocols with your supervisors',
@@ -75,7 +76,7 @@ SERVICES = [
         ('Can you work on remote sites?', 'Yes. We service projects across the Northern Territory, Western Australia and Queensland, including remote and fly-in sites.')]),
  dict(slug='fauna-spotter-catcher', where='Beside the machinery — snakes and fauna during clearing', name='Fauna Spotter Catcher Services', icon='snake',
   short='Onsite snake and fauna capture and relocation for construction, infrastructure, mining and environmental works.',
-  intro='Clearing, earthworks and construction disturb wildlife — and bring snakes and other fauna into contact with your crew. Our licensed spotter catchers work ahead of and alongside machinery to find, capture and relocate animals so works stay safe, compliant and moving.',
+  intro='Clearing, earthworks and construction disturb wildlife — and bring snakes and other fauna into contact with your crew. Our highly trained team has extensive experience with the safe capture and relocation of venomous snakes, crocodiles and other native fauna. Our licensed spotter catchers work ahead of and alongside machinery to find, capture and relocate animals so works stay safe, compliant and moving.',
   includes=['Pre-clearing fauna surveys and inspection of hollows, logs and burrows',
             'Spotter catchers working alongside clearing and earthworks crews',
             'Safe capture and relocation of snakes, lizards, frogs, birds and mammals',
@@ -85,7 +86,7 @@ SERVICES = [
         'Road, rail, pipeline, transmission and other linear infrastructure',
         'Mine site expansions, rehabilitation and camp works',
         'Projects whose environmental approvals require a fauna spotter catcher'],
-  faqs=[('Are your spotter catchers licensed?', 'Yes. Our operators are licensed and insured. [ADD LICENCE / PERMIT DETAILS]'),
+  faqs=[('Are your spotter catchers licensed?', 'Yes. Every service is backed by current licensing, comprehensive insurance and compliance with Work Health and Safety obligations, with SOPs, SWMS and risk assessments provided as required.'),
         ('Do you handle venomous snakes?', 'Yes. Venomous snake capture and relocation is a core part of the service, carried out by experienced handlers with the right equipment.'),
         ('Can you provide records for our approvals?', 'Yes. We keep fauna encounter and relocation records and can supply reports for your environmental management plan.')]),
  dict(slug='feral-animal-management', where='In the surrounding land — licensed control programs', name='Feral Animal Management', icon='shield',
@@ -100,7 +101,7 @@ SERVICES = [
         'Mine sites, camps and infrastructure corridors',
         'Government agencies and councils',
         'Properties where feral animals threaten people, stock or assets'],
-  faqs=[('Which animals do you manage?', '[CONFIRM THE SPECIES YOU MANAGE — e.g. pigs, buffalo, cattle, cats, dogs]'),
+  faqs=[('Which animals do you manage?', 'Tell us what you’re dealing with. Every strategy is tailored to the site, the operating environment and the animal species involved.'),
         ('Where do you operate?', 'Feral animal management is delivered across the Northern Territory.'),
         ('Are programs humane?', 'Yes. Programs are carried out by licensed operators in line with the relevant codes of practice for humane control.')]),
  dict(slug='awareness-training', where='With the crew — toolbox talks and site briefings', name='Crocodile & Snake Awareness Training', icon='cap',
@@ -115,13 +116,13 @@ SERVICES = [
   when=['Site inductions for new crews and contractors',
         'Before works start near water or in crocodile habitat',
         'Wet-season refreshers when conditions change',
-        'Schools, community groups and tourism operators [CONFIRM]'],
-  faqs=[('How long is a session?', '[CONFIRM — e.g. 30-minute toolbox talk to half-day course]. We tailor sessions to your roster and site.'),
+        'Any organisation whose people work where crocodiles and venomous snakes may be present'],
+  faqs=[('How long is a session?', 'Anything from a toolbox talk or safety briefing to a site-specific presentation or comprehensive awareness course — tailored to your operational environment, workforce experience and risk profile.'),
         ('Do you come to our site?', 'Yes. Training is delivered onsite so it can reflect the real conditions your crew works in.'),
         ('Is training enough on its own?', 'Training is a key control, but on high-risk water sites it works best alongside overwatch and good work-practice controls.')]),
  dict(slug='wildlife-consulting', where='In the site office — SOPs, SWMS and risk assessments', name='Wildlife Consulting', icon='doc',
   short='SOP and SWMS development, captive husbandry advice and specialist training for parks, zoos and government agencies.',
-  intro='Good wildlife-risk management starts on paper. We help organisations build the procedures, documents and skills they need to manage crocodiles, snakes and other wildlife safely — drawing on more than 20 years of hands-on field experience.',
+  intro='Good wildlife-risk management starts on paper. Since 2002 our work has included collecting venomous snakes for the production of life-saving antivenom, rescuing and relocating thousands of snakes, and capturing and managing hundreds of crocodiles — and we worked with Parks Australia to develop, review and enhance SOPs and SWMS for Kakadu National Park personnel working with crocodiles.',
   includes=['Standard operating procedures (SOPs) for wildlife handling and response',
             'Safe work method statements (SWMS) for works in crocodile habitat',
             'Wildlife risk assessments for projects, sites and events',
@@ -296,19 +297,27 @@ def build_home():
     vids = ''.join(f'<div class="card vid reveal"><div class="thumb">{icon("film", 34)}Coming soon</div><div class="vid-body"><strong>{t}</strong><span class="muted" style="font-size:13px">{s}</span></div></div>' for t, s in UPCOMING_VIDEOS)
     body = f'''
 <section class="hero">
-<video autoplay muted loop playsinline preload="metadata" poster="assets/media/hero.jpg" aria-hidden="true">
-<source src="assets/media/hero.mp4" type="video/mp4">
+<video autoplay muted loop playsinline preload="metadata" poster="assets/media/six-lines-poster.jpg" aria-hidden="true">
+<source src="assets/media/six-lines.mp4" type="video/mp4">
 </video>
 <div class="wrap hero-body">
 <p class="eyebrow">Northern Australia · Since 2002</p>
 <h1>We handle what<br><span>lurks below.</span></h1>
-<p class="lead">Specialist crocodile, snake and wildlife-risk management for government and industry across the NT, WA and QLD.</p>
-<div class="btn-row"><a class="btn btn-gold" href="contact.html">Enquire now</a><a class="btn btn-ghost" href="#capture-files"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="#E3B23C"/></svg>Watch a capture</a></div>
+<p class="lead">Specialist crocodile, snake and wildlife-risk management for government and industry across the NT, WA and QLD — led by Chris Peberdy, in the field since 2002.</p>
+<div class="btn-row"><a class="btn btn-gold" href="contact.html">Enquire now</a><a class="btn btn-ghost" href="#capture-files" data-watch><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="#E3B23C"/></svg>Watch the film with sound</a></div>
 </div>
 <button class="video-toggle" type="button" aria-label="Pause background video"></button>
 <span class="hero-note">Illustrative footage</span>
 </section>
 {MARQUEE}
+<section class="section" id="capture-files" style="background:var(--ink-2)">
+<div class="wrap">
+<div class="section-head"><div><p class="eyebrow">The capture files</p><h2>Six lines in 60 seconds</h2></div>
+<p>See how each line of defence works on a real Top End project — from eyes on the water to the procedures behind them.</p></div>
+{diagrams.explainer('')}
+</div></section>
+{story.chris_section(icon)}
+{story.pod_section(icon)}
 <section class="section scales" id="services">
 <div class="wrap">
 <div class="section-head"><div><p class="eyebrow">What we do</p><h2>Six lines of defence</h2></div>
@@ -318,14 +327,7 @@ def build_home():
 {service_cards('')}
 </div></section>
 {SECTORS}
-<section class="section" id="capture-files" style="background:var(--ink-2)">
-<div class="wrap">
-<div class="section-head"><div><p class="eyebrow">The capture files</p><h2>Six lines in 60 seconds</h2></div>
-<p>See how each line of defence works on a real Top End project — from eyes on the water to the procedures behind them.</p></div>
-{diagrams.explainer('')}
-<h3 class="sub-h">More field films</h3>
-<div class="grid g4" style="margin-top:22px">{vids}</div>
-</div></section>
+
 <section class="section scales">
 <div class="wrap">
 <p class="eyebrow">How we work</p><h2 style="margin-bottom:50px">Assess. Plan. Control. Brief.</h2>
@@ -337,7 +339,7 @@ def build_home():
 <div class="photo-badge"><span class="display">20+</span><small>YEARS IN THE FIELD</small></div></div>
 <div class="reveal">
 <p class="eyebrow">About CSA</p><h2>Field-tested. Trusted by government &amp; industry.</h2>
-<p style="font-size:18px;margin:26px 0">Crocodile Safety Australia is a Darwin-based wildlife-risk consultancy. For more than 20 years our practical, experience-driven approach has delivered tailored solutions for crews working where crocodiles, snakes and other wildlife live.</p>
+<p style="font-size:18px;margin:26px 0">Founded by Chris Peberdy in Darwin in 2002, Crocodile Safety Australia delivers hands-on wildlife projects, research and safety services to government agencies, industry and non-government organisations across the Northern Territory, Western Australia and Queensland.</p>
 <ul class="pills" style="margin-bottom:28px"><li>Licensed &amp; insured</li><li>Est. 2002</li><li>Howard Springs NT</li></ul>
 <a class="btn btn-dark" href="about.html">Our story</a>
 </div></div></section>
@@ -445,21 +447,25 @@ def build_service(s):
          s['short'] + ' Servicing the NT, WA and QLD.', 'Services', body, root=root)
 
 def build_film():
-    body = page_hero('Film &amp; Television', 'Crocs on set.<br>Crew safe.', 'Wildlife safety for film, television and commercial productions working in crocodile country.') + f'''
+    body = page_hero('Film &amp; Television', 'Crocs on set.<br>Crew safe.', 'Specialist animal wrangling and on-set safety for major international productions — trusted by the BBC, National Geographic and Animal Planet.') + f'''
 <section class="section"><div class="wrap split" style="align-items:flex-start">
 <div class="prose reveal">
 <h2>Get the shot. Keep everyone safe.</h2>
-<p>The Top End’s rivers, billabongs and coastline make spectacular locations — and serious wildlife risk. We help productions plan and shoot safely around crocodiles, snakes and other wildlife, so cast and crew can focus on the work.</p>
-<p>[CONFIRM SCOPE — e.g. documentaries, TV series, commercials, feature films — AND ADD PRODUCTION CREDITS]</p>
+<p>Our expertise extends well beyond crocodile and reptile management. Crocodile Safety Australia has provided professional animal wrangling and safety officer services for major international television and wildlife productions across Australia.</p>
+<p>We’re an established, trusted partner for film, television, documentary and wildlife productions that need specialist animal handling, risk management and on-site safety expertise.</p>
 </div>
 <div class="reveal"><ul class="ticks">
-<li>Location scouting and wildlife risk assessments</li>
-<li>On-set wildlife safety officers and water overwatch</li>
-<li>Safety briefings and inductions for cast and crew</li>
-<li>Spotter catchers for snakes and other fauna on location</li>
-<li>Advice on safe approaches for wildlife filming [CONFIRM]</li>
-<li>Risk documentation for production insurers and HSE</li>
+<li>Professional animal wrangling — crocodiles, venomous snakes and native fauna</li>
+<li>Dedicated safety officer services for cast and crew</li>
+<li>Underwater animal wrangling and aquatic site safety</li>
+<li>Risk assessment and SWMS for wildlife-involved productions</li>
+<li>Liaison with relevant wildlife authorities and permit management</li>
+<li>Remote and regional location support across Northern Australia</li>
 </ul></div>
+</div></section>
+<section class="section" style="background:var(--ink-2)"><div class="wrap">
+<div class="section-head"><div><p class="eyebrow">Production credits</p><h2>Selected productions</h2></div><p>Animal wrangling, safety officer and on-site safety services for international film, television and photography projects.</p></div>
+{story.credits_html()}
 </div></section>
 <section class="section scales"><div class="wrap">
 <p class="eyebrow">For productions</p><h2 style="margin-bottom:44px">From recce to wrap</h2>
@@ -471,7 +477,7 @@ def build_film():
 </div></div></section>
 ''' + cta_band('', 'Shooting up north?', 'Tell us your locations and dates and we’ll put together a wildlife-safety plan for your production.')
     page('film-television.html', 'Film & Television | Crocodile Safety Australia',
-         'Wildlife safety for film and TV productions in crocodile country: location risk assessments, on-set safety officers and water overwatch across Northern Australia.',
+         'Animal wrangling and on-set safety for film and TV in crocodile country — credits include BBC Top Gear, River Monsters and National Geographic\u2019s Dangerous Encounters.',
          'Film & Television', body)
 
 def build_contact():
@@ -492,7 +498,7 @@ def build_contact():
 <p class="eyebrow">Before you call</p><h2 style="margin-bottom:24px">Helpful to know</h2>
 <div class="faq">
 <details><summary>What details should I send?</summary><p>Where the site is, what work is planned, dates, crew size, and anything you’ve seen — crocodile sightings, snake activity or other wildlife. Photos help.</p></details>
-<details><summary>How quickly can you mobilise?</summary><p>[CONFIRM TYPICAL RESPONSE / MOBILISATION TIMES]</p></details>
+<details><summary>How quickly will you get back to me?</summary><p>Promptly. Tell us about your project or operational environment and Chris will be in touch — or call 0409 326 307 for anything urgent.</p></details>
 <details><summary>Do you work on remote sites?</summary><p>Yes — we service projects across the NT, WA and QLD, including remote and fly-in sites.</p></details>
 </div></div></section>
 '''

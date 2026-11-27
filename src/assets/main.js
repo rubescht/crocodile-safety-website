@@ -102,6 +102,15 @@
     set(0);
   });
 
+  // "Watch the film with sound" buttons
+  document.querySelectorAll('[data-watch]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var fig = document.querySelector('[data-explainer]'); if (!fig) return;
+      e.preventDefault(); fig.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      var b = fig.querySelector('.sound-btn'); if (b) b.click();
+    });
+  });
+
   // Reveal on scroll
   var els = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !reduce) {
