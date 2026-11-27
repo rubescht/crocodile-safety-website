@@ -446,3 +446,22 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
 .asseen a{margin-left:auto;font-weight:700}
 @media (max-width:640px){.asseen a{margin-left:0}}
 .photo-badge .display{display:block;line-height:1.05}
+/* Logo story: croc leaves the sign, bites the words, gets roped and pulled back (runs once after load) */
+.logo-bite{position:absolute;inset:0;width:100%;height:100%;opacity:0;z-index:3;pointer-events:none;animation:lb-show 4.4s ease 1.5s both}
+.lb-croc{animation:lb-move 4.4s cubic-bezier(.5,0,.3,1) 1.5s both}
+.lb-upper{transform-box:view-box;transform-origin:16px 46px;animation:lb-jaw 4.4s ease-in-out 1.5s both}
+.lb-lower{transform-box:view-box;transform-origin:16px 50px;animation:lb-jaw-low 4.4s ease-in-out 1.5s both}
+.lb-rope{opacity:0;animation:lb-rope 4.4s ease-in-out 1.5s both}
+.lb-rope ellipse{transform-box:fill-box;transform-origin:center;animation:lb-tight 4.4s ease-in-out 1.5s both}
+.site-header .logo-anim .logo-sign{animation:sign-in .9s cubic-bezier(.2,1.4,.4,1) both,lb-sign 4.4s ease 1.5s both,sign-snap 9s ease-in-out 7s infinite}
+.site-header .logo-anim .logo-words{animation:words-in .7s ease-out .45s both,lb-words 4.4s ease 1.5s both}
+.footer-logo .logo-bite{display:none}
+@keyframes lb-show{0%{opacity:0}4%,92%{opacity:1}100%{opacity:0}}
+@keyframes lb-sign{0%{opacity:1}4%,92%{opacity:0}100%{opacity:1}}
+@keyframes lb-move{0%,12%{transform:translateX(0)}28%{transform:translateX(70px)}30%,56%{transform:translateX(66px)}80%,100%{transform:translateX(0)}}
+@keyframes lb-jaw{0%,8%{transform:rotate(0)}14%,26%{transform:rotate(-16deg)}32%{transform:rotate(0)}37%{transform:rotate(-14deg)}42%{transform:rotate(0)}100%{transform:rotate(0)}}
+@keyframes lb-jaw-low{0%,8%{transform:rotate(0)}14%,26%{transform:rotate(10deg)}32%{transform:rotate(0)}37%{transform:rotate(9deg)}42%,100%{transform:rotate(0)}}
+@keyframes lb-words{0%,29%{transform:none}31%{transform:translate(2px,-1px) rotate(1deg)}33%{transform:translate(-2px,1px) rotate(-1deg)}35%{transform:translate(1px,0)}38%{transform:translate(2px,-1px) rotate(1deg)}40%{transform:translate(-1px,1px)}43%,100%{transform:none}}
+@keyframes lb-rope{0%,44%{opacity:0;transform:translateY(-70px)}46%{opacity:1}54%{opacity:1;transform:translateY(0)}92%{opacity:1;transform:translateY(0)}100%{opacity:0}}
+@keyframes lb-tight{0%,54%{transform:scale(1.5)}60%,100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.logo-bite{display:none}.site-header .logo-anim .logo-sign,.site-header .logo-anim .logo-words{animation:none!important;opacity:1;clip-path:none}}
