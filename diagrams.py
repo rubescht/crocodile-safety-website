@@ -12,9 +12,9 @@ def person(x, y, vest=True, s=1.0):
     return (f'<g transform="translate({x} {y}) scale({s})" fill="#0B1611"><circle cx="0" cy="-58" r="7"/>'
             f'<path d="M-8 -50 h16 l3 26 h-5 l-2 24 h-4 l-1-18 h-2 l-1 18 h-4 l-2-24 h-5z"/>{v}</g>')
 
-def site_section_svg():
+def site_section_svg(vb="0 70 1200 320", cls="xsec xsec-d", label=True):
     """Cross-section of a riverside work site with the six services marked."""
-    return f'''<svg viewBox="0 70 1200 320" class="xsec" role="img" aria-label="Cross-section of a riverside work site showing where each of the six services applies: 1 capture and relocation on the water, 2 overwatch spotter on the bank, 3 fauna spotter catcher beside clearing machinery, 4 feral animal management in the surrounding bush, 5 crew awareness training at the site, 6 consulting and documentation in the site office">
+    return f'''<svg viewBox="{vb}" class="{cls}" role="img" aria-label="Cross-section of a riverside work site showing where each of the six services applies: 1 capture and relocation on the water, 2 overwatch spotter on the bank, 3 fauna spotter catcher beside clearing machinery, 4 feral animal management in the surrounding bush, 5 crew awareness training at the site, 6 consulting and documentation in the site office">
 <defs>
 <linearGradient id="xs-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E2E22"/><stop offset="1" stop-color="#16402F"/></linearGradient>
 <linearGradient id="xs-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0F3A2B"/><stop offset="1" stop-color="#05140E"/></linearGradient>
@@ -65,8 +65,9 @@ def section_block(services, root):
         f'<li><a href="{root}services/{s["slug"]}.html"><span class="lg-n">{i+1}</span><span><strong>{html.escape(s["name"])}</strong>'
         f'<small>{html.escape(s["where"])}</small></span></a></li>' for i, s in enumerate(services))
     return f'''<div class="xsec-wrap reveal">
-<figure class="info-card xsec-fig"><div class="xsec-scroll">{site_section_svg()}</div>
-<figcaption>Where each line of defence works on a typical riverside project. Tap a number below to learn more.</figcaption></figure>
+<figure class="info-card xsec-fig"><div class="xsec-scroll">{site_section_svg()}
+<div class="xsec-m"><p class="xsec-m-h">On the water</p>{site_section_svg("10 168 640 180","xsec")}<p class="xsec-m-h">On the work site</p>{site_section_svg("625 72 575 150","xsec")}</div></div>
+<figcaption>Where each line of defence works on a typical riverside project. Tap a service below to learn more.</figcaption></figure>
 <ol class="xsec-legend">{items}</ol>
 </div>'''
 
@@ -87,7 +88,7 @@ def cycle(steps, centre):
         x, y = 200 + 140 * math.cos(a), 200 + 140 * math.sin(a)
         nodes.append(f'<g transform="translate({x:.0f} {y:.0f})"><circle r="38" fill="#0D2219" stroke="{GOLD}" stroke-width="3"/>'
                      f'<text y="-2" text-anchor="middle" font-family="Anton,Impact,sans-serif" font-size="22" fill="{GOLD}">{i+1}</text>'
-                     f'<text y="18" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#E9E1C8">{html.escape(t.upper())}</text></g>')
+                     f'<text y="18" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#E9E1C8">{html.escape(t.upper())}</text></g>')
         labels.append(f'<li><span class="flow-n">{i+1}</span><div><strong>{html.escape(t)}</strong><p>{html.escape(d)}</p></div></li>')
     svg = (f'<svg viewBox="0 0 400 400" class="cycle-svg" role="img" aria-label="Cycle: {html.escape(" then ".join(t for t, _ in steps))}, then repeat">'
            f'<defs><marker id="cy-ar" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="{GOLD}"/></marker></defs>'
@@ -119,6 +120,26 @@ def overwatch_plan_svg():
 <text x="240" y="276" fill="#fff" font-family="Inter,sans-serif" font-size="11">stop-work call</text>
 </svg>'''
 
+def overwatch_plan_mobile_svg():
+    return f'''<svg viewBox="0 0 400 560" class="plan-svg plan-m" role="img" aria-label="Top-down plan of an overwatch set-up: two spotters on the bank cover the water, an exclusion zone separates the crew work area from the water's edge">
+<defs><linearGradient id="owm-cone" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="{GOLD}" stop-opacity=".5"/><stop offset="1" stop-color="{GOLD}" stop-opacity="0"/></linearGradient></defs>
+<rect width="400" height="560" fill="#3A2F1E"/>
+<path d="M0 0 H400 V190 C300 210 200 176 100 196 C60 204 30 200 0 196Z" fill="#0F3A2B"/>
+<path d="M0 196 C30 200 60 204 100 196 C200 176 300 210 400 190 V270 C300 290 200 256 100 276 C60 284 30 280 0 276Z" fill="{GOLD}" opacity=".18"/>
+<path d="M0 276 C30 280 60 284 100 276 C200 256 300 290 400 270" fill="none" stroke="{GOLD}" stroke-width="3" stroke-dasharray="10 8"/>
+<polygon points="110,300 0,40 200,20" fill="url(#owm-cone)"/><polygon points="290,296 200,20 400,40" fill="url(#owm-cone)"/>
+<g fill="#0B1611" stroke="#fff" stroke-width="3"><circle cx="110" cy="300" r="16"/><circle cx="290" cy="296" r="16"/></g>
+<rect x="70" y="380" width="260" height="110" rx="14" fill="#4A6B3A" opacity=".85"/>
+<g fill="#0B1611"><circle cx="130" cy="430" r="11"/><circle cx="180" cy="450" r="11"/><circle cx="230" cy="425" r="11"/><circle cx="275" cy="452" r="11"/></g>
+<path d="M120 316 C140 350 150 370 160 392" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="6 6"/>
+<path d="M40 100 C60 92 110 90 140 92 L156 92 C160 84 168 84 172 90 L190 92 C204 94 212 96 220 100 C206 104 190 106 172 106 L80 108 C60 108 34 106 40 100Z" fill="#6E8F5A" stroke="#0B1611" stroke-width="1.5"/>
+<text x="20" y="34" fill="#9DD4BE" font-family="Inter,sans-serif" font-size="22" font-weight="700">WATER</text>
+<text x="200" y="244" text-anchor="middle" fill="{GOLD}" font-family="Inter,sans-serif" font-size="20" font-weight="700">EXCLUSION ZONE</text>
+<text x="110" y="344" text-anchor="middle" fill="#fff" font-family="Inter,sans-serif" font-size="18" font-weight="700">A</text>
+<text x="290" y="340" text-anchor="middle" fill="#fff" font-family="Inter,sans-serif" font-size="18" font-weight="700">B</text>
+<text x="200" y="520" text-anchor="middle" fill="#E9E1C8" font-family="Inter,sans-serif" font-size="20" font-weight="700">CREW WORK AREA</text>
+</svg>'''
+
 def decision_tree():
     rows = [('Can the work be planned away from the water?', 'Avoid: exclusion zones, timing, siting', 'awareness-training'),
             ('Must crews be near the water?', 'Watch: dedicated overwatch with stop-work authority', 'crocodile-spotting-overwatch'),
@@ -140,7 +161,7 @@ DIAGRAMS = {
     ('Secure', 'Safe restraint for the animal and the team.'),
     ('Relocate', 'Transport and relocation or hand-over as directed.'),
     ('Report', 'Written job report for your records.')]),
- 'crocodile-spotting-overwatch': lambda: f'<figure class="info-card reveal">{overwatch_plan_svg()}<figcaption>Typical overwatch set-up (illustrative). Spotter numbers and exclusion distances are set for each site.</figcaption></figure><h3 class="sub-h">A shift on overwatch</h3>' + flow([
+ 'crocodile-spotting-overwatch': lambda: f'<figure class="info-card reveal"><div class="plan-d">{overwatch_plan_svg()}</div>{overwatch_plan_mobile_svg()}<ul class="plan-key"><li><b>A · B</b> Spotters with overlapping sight lines</li><li><b>Dashed line</b> Edge of the exclusion zone — distance set per site</li><li><b>Crew work area</b> Kept clear of the water; stop-work call goes straight to the supervisor</li></ul><figcaption>Typical overwatch set-up (illustrative). Spotter numbers and exclusion distances are set for each site.</figcaption></figure><h3 class="sub-h">A shift on overwatch</h3>' + flow([
     ('Brief', 'Pre-start briefing on site rules and signals.'),
     ('Position', 'Spotters placed for clear sight lines.'),
     ('Scan &amp; log'.replace('&amp;', '&'), 'Continuous watch of water and banks, logged.'),

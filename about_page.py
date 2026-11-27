@@ -83,6 +83,20 @@ def numbers_html():
 SECTORS = [('Government agencies', 'shield'), ('Mining &amp; resources', 'trap'), ('Construction &amp; infrastructure', 'doc'),
            ('Environmental projects', 'snake'), ('Zoos &amp; wildlife parks', 'eye'), ('Film &amp; TV', 'film')]
 
+def scale_mobile_svg():
+    # 6 m = 330 units (55/m); person 1.8 m = 99 units tall
+    ticks = ''.join(f'<line x1="{20+i*55}" y1="222" x2="{20+i*55}" y2="234" stroke="#9DB1A4" stroke-width="2"/>' for i in range(7))
+    nums = ''.join(f'<text x="{20+i*55}" y="260" text-anchor="middle" fill="#C8D3C9" font-family="Inter,sans-serif" font-size="20">{i}m</text>' for i in (0, 2, 4, 6))
+    return f'''<svg viewBox="0 0 400 270" class="info-scale scale-m" role="img" aria-label="Scale comparison: a 6 metre saltwater crocodile beside a 1.8 metre adult">
+<path d="{CROC_SIDE}" transform="translate(20 140) scale(.55 1.1)" fill="#6E8F5A" stroke="#0B1611" stroke-width="1.5"/>
+<circle cx="266" cy="185" r="5" fill="#FFC23A"/>
+<g transform="translate(360 113) scale(.55)" fill="#E9E1C8"><circle cx="15" cy="14" r="13"/><path d="M2 34 h26 l4 62 h-8 l-3 84 h-8 l-1-70 h-2 l-1 70 h-8 l-3-84 h-8z"/></g>
+<text x="370" y="100" text-anchor="middle" fill="#E3B23C" font-family="Anton,Impact,sans-serif" font-size="20">1.8m</text>
+<line x1="20" y1="228" x2="350" y2="228" stroke="#9DB1A4" stroke-width="2"/>{ticks}{nums}
+<text x="20" y="40" fill="#E3B23C" font-family="Anton,Impact,sans-serif" font-size="40">UP TO 6 M</text>
+<text x="20" y="68" fill="#C8D3C9" font-family="Inter,sans-serif" font-size="17">Saltwater crocodile vs an adult</text>
+</svg>'''
+
 def build_about_page(g):
     icon, page, page_hero, cta_band, HERO = g['icon'], g['page'], g['page_hero'], g['cta_band'], 'assets/media/hero.jpg'
     sectors = ''.join(f'<li class="reveal">{icon(ic, 34)}<span>{name}</span></li>' for name, ic in SECTORS)
@@ -104,7 +118,7 @@ def build_about_page(g):
 <section class="section" style="background:var(--ink-2)"><div class="wrap">
 <div class="section-head"><div><p class="eyebrow">Why it matters</p><h2>Know what you’re working beside</h2></div>
 <p>Crocodiles are ambush predators that live in rivers, billabongs, estuaries and coastal waters across the north.</p></div>
-<figure class="info-card reveal" style="padding:clamp(18px,3vw,36px)"><div class="scale-scroll">{scale_svg()}</div><figcaption class="scale-hint">Swipe to see the full scale →</figcaption></figure>
+<figure class="info-card reveal" style="padding:clamp(18px,3vw,36px)"><div class="scale-d">{scale_svg()}</div>{scale_mobile_svg()}</figure>
 <div class="grid g3" style="margin-top:18px">
 <div class="card reveal"><span class="display stat-big">~100,000</span><p>estimated saltwater crocodiles in the wild in the Northern Territory</p></div>
 <div class="card reveal"><span class="display stat-big">6 m</span><p>maximum length a saltwater crocodile can reach</p></div>
