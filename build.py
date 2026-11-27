@@ -297,8 +297,8 @@ def build_home():
     vids = ''.join(f'<div class="card vid reveal"><div class="thumb">{icon("film", 34)}Coming soon</div><div class="vid-body"><strong>{t}</strong><span class="muted" style="font-size:13px">{s}</span></div></div>' for t, s in UPCOMING_VIDEOS)
     body = f'''
 <section class="hero">
-<video autoplay muted loop playsinline preload="metadata" poster="assets/media/six-lines-poster.jpg" aria-hidden="true">
-<source src="assets/media/six-lines.mp4" type="video/mp4">
+<video autoplay muted loop playsinline preload="metadata" poster="assets/media/night-hero.jpg" aria-hidden="true">
+<source src="assets/media/night-hero.mp4" type="video/mp4">
 </video>
 <div class="wrap hero-body">
 <p class="eyebrow">Northern Australia · Since 2002</p>
