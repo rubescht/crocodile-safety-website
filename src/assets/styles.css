@@ -491,3 +491,14 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
 /* Hero gold button: slightly see-through so the video shows behind it */
 .hero .btn-gold{background:rgba(227,178,60,.78);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 0 0 1px rgba(245,204,99,.55) inset}
 .hero .btn-gold:hover{background:rgba(245,204,99,.92)}
+/* Mobile homepage: clear video panel on top (croc + spotlight in view), text underneath */
+@media (max-width:640px){
+  .hero{--vh:min(100vw,64vh);display:block;min-height:0;background:var(--ink)}
+  .hero video{position:relative;inset:auto;display:block;width:100%;height:var(--vh);object-position:60% 62%}
+  .hero::after{inset:0 0 auto 0;height:var(--vh);background:linear-gradient(180deg,rgba(4,12,8,.6) 0%,rgba(4,12,8,0) 22%,rgba(4,12,8,0) 78%,var(--ink) 100%)}
+  .hero-body{margin:0;padding-top:8px;padding-bottom:40px}
+  .hero h1,.hero .lead{text-shadow:none}
+  .hero .lead{margin:16px 0 24px}
+  .video-toggle{top:calc(var(--vh) - 58px);bottom:auto;right:14px}
+  .hero-note{top:calc(var(--vh) - 46px);bottom:auto;left:16px;right:auto}
+}
