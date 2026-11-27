@@ -530,3 +530,11 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
   .vhero .lead .m-hide{display:none}
 }
 .vhero-gap{height:28px}
+/* About page on phones: every line of defence listed so visitors can scroll through all of them; the one being narrated is highlighted */
+@media (max-width:640px){
+  .ch-details{display:grid;gap:8px;padding:8px;border-radius:18px}
+  .ch-detail{display:flex;padding:14px;border-radius:14px;opacity:.62;transition:opacity .3s,background .3s;animation:none!important}
+  .ch-detail.is-on{opacity:1;background:rgba(227,178,60,.10);box-shadow:0 0 0 1px rgba(227,178,60,.5) inset}
+  .ch-detail strong{font-size:22px}
+  .ch-intro:not(.is-on){display:none}
+}
