@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Builds the Crocodile Safety Australia static site into ./dist."""
 import json, os, shutil, html
+import hashlib as _hl, pathlib as _pl
+ASSET_V = _hl.md5(b"".join(_pl.Path(__file__).with_name("src").joinpath("assets", f).read_bytes() for f in ("styles.css", "main.js"))).hexdigest()[:8]
 import diagrams
 import story
 
@@ -163,7 +165,7 @@ def head(title, desc, path, root, extra=''):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{root}assets/styles.css">
+<link rel="stylesheet" href="{root}assets/styles.css?v={ASSET_V}">
 {extra}</head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -212,7 +214,7 @@ def footer(root):
 <div class="wrap footer-base"><span>© <span id="year">2026</span> Crocodile Safety Australia · Licensed &amp; insured</span><span>If someone is in immediate danger, call 000.</span></div>
 </footer>
 <div class="callbar"><a class="btn btn-gold" href="{TEL}">Call now</a><a class="btn btn-ghost" href="{root}contact.html">Enquire</a></div>
-<script src="{root}assets/main.js" defer></script>
+<script src="{root}assets/main.js?v={ASSET_V}" defer></script>
 </body>
 </html>
 '''
