@@ -402,3 +402,18 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
   .ch-name{font-size:12px;overflow-wrap:anywhere}
   .ch-bar{width:100%}
 }
+/* Animated logo */
+.logo-anim{--h:48px;position:relative;display:inline-flex;height:var(--h);background:#F9C606;border-radius:8px;overflow:hidden;isolation:isolate}
+.logo-anim img{height:100%;width:auto;display:block}
+.logo-sign{transform-origin:50% 8%;animation:sign-in .9s cubic-bezier(.2,1.4,.4,1) both,sign-snap 9s ease-in-out 2.4s infinite}
+.logo-words{clip-path:inset(0 100% 0 0);animation:words-in .7s ease-out .45s both}
+.logo-anim::after{content:"";position:absolute;inset:-20% auto -20% -60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-18deg);animation:shine 9s ease-in-out 1.6s infinite;pointer-events:none;z-index:2}
+.brand:hover .logo-sign,.brand:focus-visible .logo-sign{animation:sign-snap-once .6s ease-in-out}
+.footer-logo.logo-anim{--h:64px;margin-bottom:14px}
+@keyframes sign-in{0%{transform:translateY(-110%) rotate(-28deg);opacity:0}60%{opacity:1}100%{transform:none;opacity:1}}
+@keyframes words-in{to{clip-path:inset(0 0 0 0)}}
+@keyframes shine{0%,72%{left:-60%}88%,100%{left:130%}}
+@keyframes sign-snap{0%,86%,100%{transform:none}88%{transform:rotate(-9deg) scale(1.06)}90%{transform:rotate(7deg) scale(1.06)}92%{transform:rotate(-5deg)}94%{transform:rotate(3deg)}96%{transform:none}}
+@keyframes sign-snap-once{0%,100%{transform:none}20%{transform:rotate(-10deg) scale(1.08)}40%{transform:rotate(8deg) scale(1.08)}60%{transform:rotate(-5deg)}80%{transform:rotate(2deg)}}
+@media (max-width:480px){.logo-anim{--h:42px}}
+@media (prefers-reduced-motion:reduce){.logo-sign,.logo-words,.logo-anim::after,.brand:hover .logo-sign{animation:none!important;clip-path:none;transform:none;opacity:1}.logo-anim::after{display:none}}

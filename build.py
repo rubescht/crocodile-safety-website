@@ -181,7 +181,7 @@ def header(active, root, solid=True):
             items.append(f'<li><a href="{root}{href}"{cur}>{html.escape(label)}</a></li>')
     return f'''<header class="site-header{' solid' if solid else ''}">
 <div class="wrap nav">
-<a class="brand" href="{root}index.html"><img class="brand-logo" src="{root}assets/logo.png" alt="Crocodile Safety Australia – home" width="196" height="83"></a>
+<a class="brand" href="{root}index.html" aria-label="Crocodile Safety Australia – home"><span class="logo-anim" aria-hidden="true"><img class="logo-sign" src="{root}assets/logo-sign.png" alt="" width="80" height="83"><img class="logo-words" src="{root}assets/logo-words.png" alt="" width="116" height="83"></span></a>
 <nav aria-label="Main"><ul class="menu" id="site-menu">{''.join(items)}</ul></nav>
 <div class="nav-cta">
 <a class="nav-phone" href="{TEL}">{PHONE}</a>
@@ -197,7 +197,7 @@ def footer(root):
     return f'''<footer class="site-footer">
 {TEETH}
 <div class="wrap footer-grid">
-<div><img class="footer-logo" src="{root}assets/logo.png" alt="Crocodile Safety Australia" width="196" height="83" loading="lazy">
+<div><span class="logo-anim footer-logo" role="img" aria-label="Crocodile Safety Australia"><img class="logo-sign" src="{root}assets/logo-sign.png" alt="" width="80" height="83" loading="lazy"><img class="logo-words" src="{root}assets/logo-words.png" alt="" width="116" height="83" loading="lazy"></span>
 <p>Specialist wildlife-risk management for government and industry across the NT, WA and QLD.</p>
 <p><a class="btn btn-gold" href="{root}contact.html">Enquire now</a></p></div>
 <div><h4>Navigation</h4><ul>{''.join(f'<li><a href="{root}{h}">{html.escape(l)}</a></li>' for l, h in NAV)}</ul></div>
