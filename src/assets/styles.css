@@ -347,3 +347,7 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
   .plan-d,.scale-d{display:none}
   .plan-m,.scale-m{display:block;width:100%;height:auto}
 }
+/* Brand logo */
+.brand-logo{height:48px;width:auto;border-radius:8px;display:block}
+.footer-logo{height:64px;width:auto;border-radius:8px;display:block;margin-bottom:14px}
+@media (max-width:480px){.brand-logo{height:42px}}

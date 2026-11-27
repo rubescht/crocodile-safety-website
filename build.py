@@ -157,7 +157,8 @@ def head(title, desc, path, root, extra=''):
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:url" content="{url}">
 <meta property="og:image" content="{SITE}/assets/media/hero.jpg">
-<link rel="icon" href="{root}assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{root}assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="{root}assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -180,7 +181,7 @@ def header(active, root, solid=True):
             items.append(f'<li><a href="{root}{href}"{cur}>{html.escape(label)}</a></li>')
     return f'''<header class="site-header{' solid' if solid else ''}">
 <div class="wrap nav">
-<a class="brand" href="{root}index.html" aria-label="Crocodile Safety Australia – home">{LOGO}<span class="brand-name">Crocodile Safety<small>AUSTRALIA</small></span></a>
+<a class="brand" href="{root}index.html"><img class="brand-logo" src="{root}assets/logo.png" alt="Crocodile Safety Australia – home" width="196" height="83"></a>
 <nav aria-label="Main"><ul class="menu" id="site-menu">{''.join(items)}</ul></nav>
 <div class="nav-cta">
 <a class="nav-phone" href="{TEL}">{PHONE}</a>
@@ -196,7 +197,7 @@ def footer(root):
     return f'''<footer class="site-footer">
 {TEETH}
 <div class="wrap footer-grid">
-<div><p class="display" style="font-size:28px;color:#fff;margin-bottom:12px">Crocodile Safety Australia</p>
+<div><img class="footer-logo" src="{root}assets/logo.png" alt="Crocodile Safety Australia" width="196" height="83" loading="lazy">
 <p>Specialist wildlife-risk management for government and industry across the NT, WA and QLD.</p>
 <p><a class="btn btn-gold" href="{root}contact.html">Enquire now</a></p></div>
 <div><h4>Navigation</h4><ul>{''.join(f'<li><a href="{root}{h}">{html.escape(l)}</a></li>' for l, h in NAV)}</ul></div>
@@ -285,7 +286,7 @@ def build_home():
     schema = {
         '@context': 'https://schema.org', '@type': 'LocalBusiness', 'name': 'Crocodile Safety Australia',
         'description': 'Specialist crocodile, snake and wildlife-risk management for government and industry across Northern Australia.',
-        'url': SITE, 'telephone': '+61 409 326 307', 'email': EMAIL, 'image': SITE + '/assets/media/hero.jpg',
+        'url': SITE, 'telephone': '+61 409 326 307', 'email': EMAIL, 'image': SITE + '/assets/media/hero.jpg', 'logo': SITE + '/assets/logo.png',
         'address': {'@type': 'PostalAddress', 'postOfficeBoxNumber': '1546', 'addressLocality': 'Howard Springs', 'addressRegion': 'NT', 'postalCode': '0835', 'addressCountry': 'AU'},
         'areaServed': ['Northern Territory', 'Western Australia', 'Queensland'],
         'foundingDate': '2002',
