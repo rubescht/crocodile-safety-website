@@ -100,8 +100,15 @@ def scale_mobile_svg():
 def build_about_page(g):
     icon, page, page_hero, cta_band, HERO = g['icon'], g['page'], g['page_hero'], g['cta_band'], 'assets/media/hero.jpg'
     sectors = ''.join(f'<li class="reveal">{icon(ic, 34)}<span>{name}</span></li>' for name, ic in SECTORS)
-    body = page_hero('About us', 'Field-tested since 2002',
-                     'A Darwin-based wildlife-risk consultancy. Here’s who we are, where we work and how we keep crews safe — at a glance.') + f'''
+    import diagrams
+    services = g['SERVICES']
+    body = f'''<section class="page-hero scales vhero"><div class="wrap" style="position:relative">
+<p class="eyebrow">About us</p><h1 style="max-width:900px">Six lines of defence</h1>
+<p class="lead">Since 2002 we’ve kept crews safe in crocodile country. Watch how we do it — the graphics below follow along as each line is explained.</p>
+<div style="height:28px"></div>
+{diagrams.video_sync_block(services, '')}
+</div></section>
+''' + f'''
 <section class="section" style="background:var(--ink-2)"><div class="wrap">
 <div class="section-head"><div><p class="eyebrow">By the numbers</p><h2>CSA at a glance</h2></div>
 <p>More than two decades of practical, experience-driven work for the people who build, mine, research and film in crocodile country.</p></div>

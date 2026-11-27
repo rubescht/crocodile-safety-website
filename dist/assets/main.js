@@ -76,6 +76,32 @@
     v.addEventListener('ended', function () { v.muted = true; v.loop = true; fig.classList.remove('has-sound'); v.controls = false; v.play(); });
   });
 
+
+  // Synced infographics: highlight the line of defence being narrated; tap to jump
+  document.querySelectorAll('[data-sync]').forEach(function (box) {
+    var v = box.querySelector('video'); if (!v) return;
+    var CH = [0, 8, 16, 24, 32, 40, 48, 56];
+    var btns = box.querySelectorAll('.ch'), marks = box.querySelectorAll('.mk[data-ch]'), dets = box.querySelectorAll('.ch-detail');
+    var cur = -1;
+    function chapterAt(t) { var c = 0; for (var i = 1; i < CH.length; i++) if (t >= CH[i]) c = i; return c > 6 ? 0 : c; }
+    function set(c) {
+      if (c === cur) return; cur = c;
+      btns.forEach(function (b) { var n = +b.dataset.ch; b.classList.toggle('is-on', n === c); b.classList.toggle('is-done', c > 0 && n < c); b.setAttribute('aria-current', n === c ? 'true' : 'false'); });
+      marks.forEach(function (m) { m.classList.toggle('is-on', +m.dataset.ch === c); });
+      dets.forEach(function (d) { d.classList.toggle('is-on', +d.dataset.ch === c); });
+    }
+    v.addEventListener('timeupdate', function () {
+      var t = v.currentTime, c = chapterAt(t); set(c);
+      btns.forEach(function (b) { var n = +b.dataset.ch, bar = b.querySelector('.ch-bar i');
+        if (bar && n === c) bar.style.width = Math.min(100, (t - CH[n]) / 8 * 100) + '%'; else if (bar) bar.style.width = n < c ? '100%' : '0'; });
+    });
+    v.addEventListener('play', function () { box.classList.add('playing'); });
+    btns.forEach(function (b) { b.addEventListener('click', function () {
+      v.currentTime = +b.dataset.t + 0.05; var p = v.play(); if (p && p.catch) p.catch(function () {}); set(+b.dataset.ch);
+    }); });
+    set(0);
+  });
+
   // Reveal on scroll
   var els = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !reduce) {
