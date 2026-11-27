@@ -351,3 +351,15 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
 .brand-logo{height:48px;width:auto;border-radius:8px;display:block}
 .footer-logo{height:64px;width:auto;border-radius:8px;display:block;margin-bottom:14px}
 @media (max-width:480px){.brand-logo{height:42px}}
+/* Explainer film */
+.explainer{position:relative;margin:0;border-radius:22px;overflow:hidden;background:#000;border:1px solid var(--line)}
+.explainer video{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+.explainer video::cue{background:rgba(4,12,8,.78);color:#fff;font-family:Inter,system-ui,sans-serif;font-size:clamp(14px,1.7vw,20px);line-height:1.35}
+.sound-btn{position:absolute;top:16px;right:16px;display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 18px;border:0;border-radius:999px;background:var(--gold);color:var(--ink);font:700 15px var(--body);cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35);animation:soundpulse 2.4s ease-in-out infinite}
+.sound-btn:hover{background:var(--gold-2)}
+.explainer.has-sound .sound-btn{display:none}
+.explainer figcaption{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;padding:12px 18px;background:var(--panel);color:var(--muted);font-size:14px}
+.explainer figcaption strong{color:var(--white)}
+@keyframes soundpulse{0%,100%{box-shadow:0 0 0 0 rgba(227,178,60,.55)}50%{box-shadow:0 0 0 12px rgba(227,178,60,0)}}
+@media (max-width:640px){.sound-btn{top:10px;right:10px;padding:8px 14px;font-size:14px;min-height:44px}}
+@media (prefers-reduced-motion:reduce){.sound-btn{animation:none}}

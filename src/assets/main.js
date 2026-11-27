@@ -53,6 +53,29 @@
     }
   }
 
+
+  // Explainer film: autoplays muted with captions; tap for sound restarts with voiceover
+  document.querySelectorAll('[data-explainer]').forEach(function (fig) {
+    var v = fig.querySelector('video'), btn = fig.querySelector('.sound-btn');
+    if (!v) return;
+    if (reduce) { v.removeAttribute('autoplay'); v.pause(); v.controls = true; }
+    // play only while on screen
+    if ('IntersectionObserver' in window && !reduce) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+          else if (v.muted) v.pause();
+        });
+      }, { threshold: 0.35 }).observe(v);
+    }
+    if (btn) btn.addEventListener('click', function () {
+      v.muted = false; v.loop = false; v.currentTime = 0; v.controls = true;
+      fig.classList.add('has-sound');
+      var p = v.play(); if (p && p.catch) p.catch(function () {});
+    });
+    v.addEventListener('ended', function () { v.muted = true; v.loop = true; fig.classList.remove('has-sound'); v.controls = false; v.play(); });
+  });
+
   // Reveal on scroll
   var els = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window && !reduce) {

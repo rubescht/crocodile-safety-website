@@ -194,3 +194,14 @@ DIAGRAMS = {
 
 def service_diagram(slug):
     return DIAGRAMS[slug]()
+
+def explainer(root):
+    """Autoplaying (muted) explainer film with captions and a tap-for-sound button."""
+    return f'''<figure class="explainer reveal" data-explainer>
+<video autoplay muted loop playsinline preload="metadata" poster="{root}assets/media/six-lines-poster.jpg" aria-label="Video: the six lines of defence explained">
+<source src="{root}assets/media/six-lines.mp4" type="video/mp4">
+<track kind="captions" src="{root}assets/media/six-lines.vtt" srclang="en" label="English" default>
+</video>
+<button type="button" class="sound-btn"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span>Tap for sound</span></button>
+<figcaption><span><strong>The six lines of defence</strong> · 1:02 · narrated</span><span>Illustrative footage</span></figcaption>
+</figure>'''

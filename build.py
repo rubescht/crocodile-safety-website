@@ -320,11 +320,10 @@ def build_home():
 {SECTORS}
 <section class="section" id="capture-files" style="background:var(--ink-2)">
 <div class="wrap">
-<div class="section-head"><div><p class="eyebrow">The capture files</p><h2>Watch how it’s done</h2></div>
-<p>Short films that show how a crocodile is safely approached, secured and readied for relocation.</p></div>
-<div class="video-feature reveal"><video controls muted playsinline preload="none" poster="assets/media/hero.jpg">
-<source src="assets/media/hero.mp4" type="video/mp4"></video></div>
-<div class="video-caption"><span><strong style="color:#fff">Saltwater crocodile: approach &amp; noose capture</strong> · 0:10</span><span>Illustrative footage</span></div>
+<div class="section-head"><div><p class="eyebrow">The capture files</p><h2>Six lines in 60 seconds</h2></div>
+<p>See how each line of defence works on a real Top End project — from eyes on the water to the procedures behind them.</p></div>
+{diagrams.explainer('')}
+<h3 class="sub-h">More field films</h3>
 <div class="grid g4" style="margin-top:22px">{vids}</div>
 </div></section>
 <section class="section scales">
@@ -406,7 +405,7 @@ def build_about():
 
 def build_services():
     body = page_hero('Services', 'Six lines of defence', 'From eyes on the water to capture and relocation — wildlife-risk controls matched to your site, your crew and your approvals.') + f'''
-<section class="section scales"><div class="wrap"><div class="section-head"><div><p class="eyebrow">On site</p><h2>Where each line works</h2></div><p>Six services, each covering a different part of the risk — from the water’s edge to the site office.</p></div>{diagrams.section_block(SERVICES, '')}<div style="height:56px"></div>{service_cards('')}</div></section>
+<section class="section scales"><div class="wrap"><div class="section-head"><div><p class="eyebrow">On site</p><h2>Where each line works</h2></div><p>Six services, each covering a different part of the risk — from the water’s edge to the site office.</p></div>{diagrams.section_block(SERVICES, '')}<div style="height:40px"></div>{diagrams.explainer('')}<div style="height:56px"></div>{service_cards('')}</div></section>
 <section class="section" style="background:var(--ink-2)"><div class="wrap">
 <p class="eyebrow">Our approach</p><h2 style="margin-bottom:50px">Assess. Plan. Control. Brief.</h2>{steps_html()}</div></section>
 {SECTORS}
