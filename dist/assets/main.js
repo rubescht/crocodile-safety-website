@@ -1,3 +1,14 @@
+// Bring a playing video fully into view (clear of the phone call bar)
+function showVideo(v) {
+  if (!v) return;
+  var r = v.getBoundingClientRect(), bar = document.querySelector('.callbar');
+  var barH = bar && getComputedStyle(bar).display !== 'none' ? bar.offsetHeight : 0;
+  var room = window.innerHeight - barH;
+  if (r.top >= 8 && r.bottom <= room - 8) return;
+  var top = window.scrollY + r.top - Math.max(12, (room - r.height) / 2);
+  var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: top, behavior: smooth ? 'smooth' : 'auto' });
+}
 // Crocodile Safety Australia — site script
 (function () {
   // Mobile menu
@@ -72,6 +83,7 @@
       v.muted = false; v.loop = false; v.currentTime = 0; v.controls = true;
       fig.classList.add('has-sound');
       var p = v.play(); if (p && p.catch) p.catch(function () {});
+      showVideo(v);
     });
     v.addEventListener('ended', function () { v.muted = true; v.loop = true; fig.classList.remove('has-sound'); v.controls = false; v.play(); });
     // transcript: highlight the line being spoken; tap a line to jump there
@@ -119,8 +131,8 @@
   document.querySelectorAll('[data-watch]').forEach(function (a) {
     a.addEventListener('click', function (e) {
       var fig = document.querySelector('[data-explainer]'); if (!fig) return;
-      e.preventDefault(); fig.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-      var b = fig.querySelector('.sound-btn'); if (b) b.click();
+      e.preventDefault();
+      var b = fig.querySelector('.sound-btn'); if (b) b.click(); else showVideo(fig.querySelector('video'));
     });
   });
 

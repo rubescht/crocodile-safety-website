@@ -520,3 +520,13 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
   .hero .hero-enquire{display:none}
   .hero .hero-watch{flex:1 1 100%;font-size:15px;text-align:left;border-color:rgba(227,178,60,.6);background:rgba(227,178,60,.08)}
 }
+/* About page on phones: video in view on the first screen */
+@media (max-width:640px){
+  .vhero{padding-top:22px}
+  .vhero-gap{height:0!important}
+  .vhero .eyebrow{margin-bottom:10px}
+  .vhero h1{font-size:clamp(42px,12.5vw,56px)}
+  .vhero .lead{font-size:15px;line-height:1.5;margin:12px 0 18px}
+  .vhero .lead .m-hide{display:none}
+}
+.vhero-gap{height:28px}
