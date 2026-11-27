@@ -284,8 +284,18 @@ def page(path, title, desc, active, body, root='', solid=True, extra_head=''):
     with open(full, 'w') as f:
         f.write(out)
 
-def page_hero(eyebrow, title, lead, crumbs=None, eye=True):
+PHOTO_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'src', 'assets', 'photos')
+
+def photo_url(key, root=''):
+    """Real photo for a page, if one has been added to src/assets/photos/<key>.jpg"""
+    f = os.path.join(PHOTO_DIR, key + '.jpg')
+    return f'{root}assets/photos/{key}.jpg?v={int(os.path.getmtime(f))}' if os.path.exists(f) else ''
+
+def page_hero(eyebrow, title, lead, crumbs=None, eye=True, photo=None, root=''):
     c = f'<p class="crumbs">{crumbs}</p>' if crumbs else ''
+    url = photo_url(photo, root) if photo else ''
+    if url:
+        return f'''<section class="page-hero scales has-photo"><div class="ph-photo" style="background-image:url('{url}')" role="img" aria-label="{eyebrow} in the field"></div><div class="wrap" style="position:relative">{c}<p class="eyebrow">{eyebrow}</p><h1 style="max-width:860px">{title}</h1><p class="lead">{lead}</p></div></section>'''
     return f'''<section class="page-hero scales">{'<div class="eye-deco" aria-hidden="true"></div>' if eye else ''}<div class="wrap" style="position:relative">{c}<p class="eyebrow">{eyebrow}</p><h1 style="max-width:860px">{title}</h1><p class="lead">{lead}</p></div></section>'''
 
 # ---------------------------------------------------------------- pages
@@ -344,7 +354,7 @@ def build_home():
 </div></section>
 <section class="section sand">
 <div class="wrap split">
-<div class="photo reveal"><img src="{root_img}assets/media/hero.jpg" alt="Wildlife ranger in a boat holding a catching pole as a saltwater crocodile approaches" loading="lazy">
+<div class="photo reveal"><img src="{photo_url('about', root_img) or root_img + 'assets/media/hero.jpg'}" alt="Wildlife ranger in a boat holding a catching pole as a saltwater crocodile approaches" loading="lazy">
 <div class="photo-badge"><span class="display">20+</span><small>YEARS IN THE FIELD</small></div></div>
 <div class="reveal">
 <p class="eyebrow">About CSA</p><h2>Field-tested. Trusted by government &amp; industry.</h2>
@@ -382,7 +392,7 @@ def build_about():
 <p>We’re trusted by government agencies, mining and resources companies, construction and infrastructure contractors, environmental consultants, wildlife parks and film productions across the Northern Territory, Western Australia and Queensland.</p>
 <p>[FOUNDER NAME AND SHORT BIO — background, years handling crocodiles, licences, notable projects]</p>
 </div>
-<div class="photo reveal"><img src="{root_img}assets/media/hero.jpg" alt="Wildlife ranger in a boat on a Top End river with a catching pole" loading="lazy"><div class="photo-badge"><span class="display">20+</span><small>YEARS IN THE FIELD</small></div></div>
+<div class="photo reveal"><img src="{photo_url('about', root_img) or root_img + 'assets/media/hero.jpg'}" alt="Wildlife ranger in a boat on a Top End river with a catching pole" loading="lazy"><div class="photo-badge"><span class="display">20+</span><small>YEARS IN THE FIELD</small></div></div>
 </div></section>
 <section class="section scales">
 <div class="wrap">
@@ -415,7 +425,7 @@ def build_about():
          'About', body)
 
 def build_services():
-    body = page_hero('Services', 'Six lines of defence', 'From eyes on the water to capture and relocation — wildlife-risk controls matched to your site, your crew and your approvals.') + f'''
+    body = page_hero('Services', 'Six lines of defence', 'From eyes on the water to capture and relocation — wildlife-risk controls matched to your site, your crew and your approvals.', photo='services') + f'''
 <section class="section scales"><div class="wrap"><div class="section-head"><div><p class="eyebrow">On site</p><h2>Where each line works</h2></div><p>Six services, each covering a different part of the risk — from the water’s edge to the site office.</p></div>{diagrams.section_block(SERVICES, '')}<div style="height:40px"></div>{diagrams.explainer('')}<div style="height:56px"></div>{service_cards('')}</div></section>
 <section class="section" style="background:var(--ink-2)"><div class="wrap">
 <p class="eyebrow">Our approach</p><h2 style="margin-bottom:50px">Assess. Plan. Control. Brief.</h2>{steps_html()}</div></section>
@@ -430,7 +440,7 @@ def build_service(s):
     others = ''.join(f'<a href="{o["slug"]}.html"><span>{html.escape(o["name"])}</span><span aria-hidden="true">→</span></a>' for o in SERVICES if o is not s)
     faqs = ''.join(f'<details><summary>{html.escape(q)}</summary><p>{html.escape(a)}</p></details>' for q, a in s['faqs'])
     body = page_hero('Service', html.escape(s['name']), html.escape(s['short']),
-                     crumbs=f'<a href="../index.html">Home</a> / <a href="../services.html">Services</a> / {html.escape(s["name"])}') + f'''
+                     crumbs=f'<a href="../index.html">Home</a> / <a href="../services.html">Services</a> / {html.escape(s["name"])}', photo=s['slug'], root='../') + f'''
 <section class="section"><div class="wrap layout-aside">
 <div class="main prose">
 <p style="font-size:19px;color:var(--text)">{html.escape(s['intro'])}</p>
@@ -456,7 +466,7 @@ def build_service(s):
          s['short'] + ' Servicing the NT, WA and QLD.', 'Services', body, root=root)
 
 def build_film():
-    body = page_hero('Film &amp; Television', 'Crocs on set.<br>Crew safe.', 'Specialist animal wrangling and on-set safety for major international productions — trusted by the BBC, National Geographic and Animal Planet.') + f'''
+    body = page_hero('Film &amp; Television', 'Crocs on set.<br>Crew safe.', 'Specialist animal wrangling and on-set safety for major international productions — trusted by the BBC, National Geographic and Animal Planet.', photo='film-television') + f'''
 <section class="section"><div class="wrap split" style="align-items:flex-start">
 <div class="prose reveal">
 <h2>Get the shot. Keep everyone safe.</h2>
@@ -490,7 +500,7 @@ def build_film():
          'Film & Television', body)
 
 def build_contact():
-    body = page_hero('Contact', 'Working in croc country?', 'Call for urgent call-outs, or send your site details and we’ll come back with a plan.') + f'''
+    body = page_hero('Contact', 'Working in croc country?', 'Call for urgent call-outs, or send your site details and we’ll come back with a plan.', photo='contact') + f'''
 <section class="section scales"><div class="wrap split" style="align-items:flex-start">
 <div class="reveal">
 <a class="contact-big" href="{TEL}">{PHONE}</a>

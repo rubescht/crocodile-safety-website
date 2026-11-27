@@ -158,7 +158,7 @@ def build_about_page(g):
 </div></section>
 
 <section class="section sand"><div class="wrap split">
-<div class="photo reveal"><img src="{HERO}" alt="Wildlife ranger in a boat on a Top End river with a catching pole" loading="lazy"><div class="photo-badge"><span class="display">2002</span><small>ESTABLISHED</small></div></div>
+<div class="photo reveal"><img src="{g['photo_url']('about') or HERO}" alt="Wildlife ranger in a boat on a Top End river with a catching pole" loading="lazy"><div class="photo-badge"><span class="display">2002</span><small>ESTABLISHED</small></div></div>
 <div class="reveal"><p class="eyebrow">Our story</p><h2>Practical. Experienced. On site.</h2>
 <p style="font-size:18px;margin:24px 0">Crocodile Safety Australia helps government and industry work safely where crocodiles, snakes and other wildlife live. We read the site, understand the animals and design controls that fit the way your crew actually works.</p>
 <p>Founded by <strong>Chris Peberdy</strong> in Darwin in 2002, CSA delivers expert reptile and wildlife handling, risk management, training, husbandry and advisory services to government and non-government organisations across the NT, WA and QLD.</p>

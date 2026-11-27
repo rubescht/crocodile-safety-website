@@ -591,3 +591,19 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
 .span-all{grid-column:1/-1}
 .sectors .wrap{justify-content:center}
 .quick-form select{font-size:13px;padding-right:28px;text-overflow:ellipsis}
+/* Real photo in a page hero: sits on the right and fades into the background */
+.page-hero.has-photo{min-height:min(62vh,560px);display:flex;align-items:center}
+.page-hero.has-photo .wrap{width:100%}
+.ph-photo{position:absolute;inset:0 0 0 38%;background-size:cover;background-position:center;-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 38%);mask-image:linear-gradient(90deg,transparent 0%,#000 38%)}
+.ph-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,12,8,.35),rgba(4,12,8,0) 30%,rgba(4,12,8,0) 70%,var(--ink-2))}
+.page-hero.has-photo .lead{max-width:520px}
+@media (max-width:760px){
+  .page-hero.has-photo{display:block;min-height:0;padding-top:0}
+  .ph-photo{position:relative;inset:auto;display:block;height:min(58vw,300px);-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent);mask-image:linear-gradient(180deg,#000 60%,transparent)}
+  .ph-photo::after{display:none}
+  .page-hero.has-photo .wrap{margin-top:-8px}
+}
+@media (min-width:761px){
+  .ph-photo{inset:0 0 0 40%;-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.55) 30%,#000 60%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.55) 30%,#000 60%)}
+  .page-hero.has-photo h1,.page-hero.has-photo .lead{text-shadow:0 2px 24px rgba(0,0,0,.7)}
+}
