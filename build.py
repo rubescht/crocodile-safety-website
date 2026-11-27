@@ -517,7 +517,8 @@ def build_misc():
 if __name__ == '__main__':
     if os.path.exists(DIST): shutil.rmtree(DIST)
     shutil.copytree(SRC, DIST)
-    build_home(); build_about(); build_services()
+    import about_page
+    build_home(); about_page.build_about_page(globals()); build_services()
     for s in SERVICES: build_service(s)
     build_film(); build_contact(); build_404(); build_misc()
     print('\n'.join(sorted(os.path.relpath(os.path.join(dp, f), DIST) for dp, _, fs in os.walk(DIST) for f in fs)))
