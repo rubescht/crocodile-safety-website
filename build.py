@@ -297,17 +297,19 @@ def build_home():
     vids = ''.join(f'<div class="card vid reveal"><div class="thumb">{icon("film", 34)}Coming soon</div><div class="vid-body"><strong>{t}</strong><span class="muted" style="font-size:13px">{s}</span></div></div>' for t, s in UPCOMING_VIDEOS)
     body = f'''
 <section class="hero">
+<div class="hero-media">
 <video autoplay muted loop playsinline preload="metadata" poster="assets/media/night-hero.jpg" aria-hidden="true">
 <source src="assets/media/night-hero.mp4" type="video/mp4">
 </video>
+<button class="video-toggle" type="button" aria-label="Pause background video"></button>
+<span class="hero-note">Illustrative footage</span>
+</div>
 <div class="wrap hero-body">
 <p class="eyebrow">Northern Australia · Since 2002</p>
 <h1>We handle what<br><span>lurks below.</span></h1>
 <p class="lead">Specialist crocodile, snake and wildlife-risk management for government and industry across the NT, WA and QLD — led by Chris Peberdy, in the field since 2002.</p>
-<div class="btn-row"><a class="btn btn-gold" href="contact.html">Enquire now</a><a class="btn btn-ghost" href="#capture-files" data-watch><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="#E3B23C"/></svg>Watch the film with sound</a></div>
+<div class="btn-row"><a class="btn btn-gold" href="contact.html">Enquire now</a><a class="btn btn-ghost" href="#capture-files" data-watch><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="#E3B23C"/></svg>Watch the film<span class="m-hide"> with sound</span></a></div>
 </div>
-<button class="video-toggle" type="button" aria-label="Pause background video"></button>
-<span class="hero-note">Illustrative footage</span>
 </section>
 {MARQUEE}
 <section class="section" id="capture-files" style="background:var(--ink-2)">
