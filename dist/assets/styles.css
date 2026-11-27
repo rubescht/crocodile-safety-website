@@ -542,12 +542,14 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
 .vsync .transcript{display:none}
 @media (max-width:640px){
   .vsync .transcript{display:block;padding:14px 16px 16px}
-  .vsync .transcript li{display:none}
-  .vsync .transcript li.is-on{display:block;animation:chin .35s ease}
+  .vsync .transcript ol{position:relative;display:block;overflow:hidden;transition:height .45s ease}
+  .vsync .transcript li{position:absolute;left:0;right:0;top:0;opacity:0;transform:translateY(110%);transition:transform .6s cubic-bezier(.2,.8,.2,1),opacity .45s ease}
+  .vsync .transcript li.is-past{transform:translateY(-110%)}
+  .vsync .transcript li.is-on{opacity:1;transform:none}
   .vsync .transcript button.is-on{background:none;padding:0;font-size:16px;line-height:1.5;color:var(--white);cursor:default}
   .vsync .transcript .tr-t{display:none}
 }
-@media (prefers-reduced-motion:reduce){.vsync .transcript li.is-on{animation:none}}
+@media (prefers-reduced-motion:reduce){.vsync .transcript li,.vsync .transcript ol{transition:none}}
 @media (max-width:640px){
   .vsync .explainer{display:flex;flex-direction:column}
   .vsync .explainer .transcript{order:1;border-top:0}

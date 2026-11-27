@@ -95,8 +95,13 @@ function showVideo(v) {
       var mark = function () {
         var t = v.currentTime, cur = 0;
         lines.forEach(function (b, i) { if (t >= +b.dataset.start - 0.3) cur = i; });
-        lines.forEach(function (b, i) { b.classList.toggle('is-on', i === cur); b.parentNode.classList.toggle('is-on', i === cur); });
+        lines.forEach(function (b, i) { b.classList.toggle('is-on', i === cur); b.parentNode.classList.toggle('is-on', i === cur); b.parentNode.classList.toggle('is-past', i < cur); });
+        // one-line ticker (About page on phones): size the window to the line being spoken
+        var ol = lines[0].parentNode.parentNode;
+        if (getComputedStyle(ol).position === 'relative') ol.style.height = lines[cur].parentNode.offsetHeight + 'px';
+        else ol.style.height = '';
       };
+      window.addEventListener('resize', mark);
       v.addEventListener('timeupdate', mark); v.addEventListener('seeked', mark); mark();
       lines.forEach(function (b) { b.addEventListener('click', function () {
         v.currentTime = +b.dataset.start; var p = v.play(); if (p && p.catch) p.catch(function () {});
