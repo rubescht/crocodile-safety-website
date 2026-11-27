@@ -3,6 +3,9 @@
 import json, os, shutil, html
 import hashlib as _hl, pathlib as _pl
 ASSET_V = _hl.md5(b"".join(_pl.Path(__file__).with_name("src").joinpath("assets", f).read_bytes() for f in ("styles.css", "main.js"))).hexdigest()[:8]
+import re
+# Each fetched media file is versioned by its source id, so a replaced video reaches visitors straight away
+MEDIA_V = {m.group(1): m.group(2)[:8] for m in re.finditer(r'media/([\w.-]+) \] \|\| curl .*?/([0-9a-f]{8})[0-9a-f-]*\.\w+"', _pl.Path(__file__).with_name("fetch-media.sh").read_text())}
 import diagrams
 import story
 
@@ -276,6 +279,8 @@ def page(path, title, desc, active, body, root='', solid=True, extra_head=''):
     out = head(title, desc, path, root, extra_head) + header(active, root, solid) + f'<main id="main">{body}</main>' + footer(root)
     full = os.path.join(DIST, path)
     os.makedirs(os.path.dirname(full), exist_ok=True)
+    for name, ver in MEDIA_V.items():
+        out = re.sub(r'(assets/media/' + re.escape(name) + r')(?=["\'\s)])', r'\1?v=' + ver, out)
     with open(full, 'w') as f:
         f.write(out)
 
