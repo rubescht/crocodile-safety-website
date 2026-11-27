@@ -117,6 +117,18 @@ function showVideo(v) {
       btns.forEach(function (b) { var n = +b.dataset.ch; b.classList.toggle('is-on', n === c); b.classList.toggle('is-done', c > 0 && n < c); b.setAttribute('aria-current', n === c ? 'true' : 'false'); });
       marks.forEach(function (m) { m.classList.toggle('is-on', +m.dataset.ch === c); });
       dets.forEach(function (d) { d.classList.toggle('is-on', +d.dataset.ch === c); });
+      follow(c);
+    }
+    // Phones: the film stays pinned at the top; while it plays with sound, bring the segment being narrated into view under it
+    var fig = box.querySelector('[data-explainer]'), phone = window.matchMedia('(max-width: 640px)');
+    function follow(c) {
+      if (!phone.matches || c < 1 || v.paused || !fig || !fig.classList.contains('has-sound')) return;
+      var d = box.querySelector('.ch-detail[data-ch="' + c + '"]'); if (!d) return;
+      var bar = document.querySelector('.callbar'), barH = bar && getComputedStyle(bar).display !== 'none' ? bar.offsetHeight : 0;
+      var figH = fig.getBoundingClientRect().height, r = d.getBoundingClientRect();
+      if (r.top >= figH + 4 && r.bottom <= window.innerHeight - barH - 4) return;
+      var smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: window.scrollY + r.top - figH - 12, behavior: smooth ? 'smooth' : 'auto' });
     }
     v.addEventListener('timeupdate', function () {
       var t = v.currentTime, c = chapterAt(t); set(c);

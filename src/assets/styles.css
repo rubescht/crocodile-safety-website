@@ -553,3 +553,13 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
   .vsync .explainer .transcript{order:1;border-top:0}
   .vsync .explainer figcaption{order:2;border-top:1px solid var(--line)}
 }
+/* About page on phones: film pinned at the top while scrolling through the six lines */
+@media (max-width:640px){
+  .vsync .explainer{position:sticky;top:0;z-index:6;box-shadow:0 12px 30px rgba(0,0,0,.55)}
+  .vsync .explainer figcaption{padding:6px 14px;font-size:12px}
+  .vsync .explainer figcaption span:first-child{display:none}
+  .vsync .transcript{padding:10px 14px 12px}
+  .vsync .tr-h{margin-bottom:6px;font-size:11px}
+  .vsync .transcript button.is-on{font-size:15px;line-height:1.45}
+}
+@media (max-width:640px){.vhero{overflow:visible;overflow-x:clip}}
