@@ -308,7 +308,7 @@ def build_home():
 <p class="eyebrow">Northern Australia · Since 2002</p>
 <h1>We handle what<br><span>lurks below.</span></h1>
 <p class="lead">Specialist crocodile, snake and wildlife-risk management for government and industry across the NT, WA and QLD — led by Chris Peberdy, in the field since 2002.</p>
-<div class="btn-row"><a class="btn btn-gold" href="contact.html">Enquire now</a><a class="btn btn-ghost" href="#capture-files" data-watch><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="#E3B23C"/></svg>Watch the film<span class="m-hide"> with sound</span></a></div>
+<div class="btn-row"><a class="btn btn-gold hero-enquire" href="contact.html">Enquire now</a><a class="btn btn-ghost hero-watch" href="#capture-files" data-watch><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="#E3B23C"/></svg><span class="m-hide">Watch the film with sound</span><span class="m-show">1-min video: keeping crews croc-safe</span></a></div>
 </div>
 </section>
 {MARQUEE}

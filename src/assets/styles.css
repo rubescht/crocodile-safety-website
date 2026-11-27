@@ -514,3 +514,9 @@ a.card:hover{transform:translateY(-4px);border-color:var(--gold);color:var(--tex
   .hero .lead{font-size:14px;margin:10px 0 14px}
   .hero h1{font-size:clamp(40px,12vw,52px)}
 }
+.m-show{display:none}
+@media (max-width:640px){
+  .m-show{display:inline}
+  .hero .hero-enquire{display:none}
+  .hero .hero-watch{flex:1 1 100%;font-size:15px;text-align:left;border-color:rgba(227,178,60,.6);background:rgba(227,178,60,.08)}
+}
